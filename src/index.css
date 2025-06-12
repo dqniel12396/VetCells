@@ -1,1 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+
+
+/* Paso 1: Importamos Tailwind */
 @import "tailwindcss";
+
+/* Paso 2: Opcional, definimos variables de tema */
+@theme {
+  /* Colores personalizados */
+  --color-violet: #7c3aed;
+  --color-green: #16a34a;
+  --font-sans: "Roboto", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* Paso 3: Luego viene utilities */
+
+
+/* Paso 4: Clases personalizadas que usan @apply */
+.form-section {
+  @apply p-6 bg-white border-2 border-solid border-gray-300 rounded-xl shadow;
+}
+.form-section-title {
+  @apply text-xl font-semibold text-green-700 mb-4;
+}
+.input-main {
+  @apply w-full bg-gray-200 border-2 border-solid border-black rounded-lg px-3 py-2
+         text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500 placeholder-gray-400 transition;
+}
+.input-label {
+  @apply text-violet-700 font-medium mb-1 text-sm;
+}
