@@ -98,7 +98,7 @@ exports.handler = async function(event, context) {
     let mailStatus = 'No se enviaron correos.';
     try {
         const fromEmail = 'onboarding@resend.dev'; // IMPORTANTE: Cambia esto a un email de tu dominio verificado, ej: 'noreply@vetcells.com'
-
+/*
         // --- Correo para el Propietario/Cliente ---
         if (data.emailPropietario) {
             await resend.emails.send({
@@ -114,7 +114,7 @@ exports.handler = async function(event, context) {
                        <p><strong>Equipo Vet Cells</strong></p>`,
             });
         }
-        
+        */
         // --- Correo para el Laboratorio (interno) ---
         const emailInterno = process.env.EMAIL_TO;
         if (emailInterno) {
