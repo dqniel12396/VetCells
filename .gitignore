@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+netlify/functions/credentials.json
+# Local Netlify folder
+.netlify
