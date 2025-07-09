@@ -3,6 +3,7 @@ import React, { useState } from "react";
 export default function FormularioMascota() {
   const [formData, setFormData] = useState({
     paisDestino: "Unión europea",
+    otroDestino: "",
     nombreMascota: "",
     especie: "Canina",
     fechaNacimiento: "",
@@ -15,7 +16,7 @@ export default function FormularioMascota() {
     laboratorio: "",
     numeroLote: "",
     emailAdicional: "",
-    historico: "Muestra tomada por primera vez",
+    
     raza: "",
     sexo: "Macho",
     color: "",
@@ -96,23 +97,31 @@ const handleSubmit = async (e) => {
             <h2 className="form-section-title">Datos para la Solicitud</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <label className="flex flex-col">
-                    <span className="input-label">Destino</span>
-                    <select name="paisDestino" value={formData.paisDestino} onChange={handleChange} className={inputClasses}>
-                        <option>Unión europea</option>
-                        <option>Estados Unidos</option>
-                        <option>Otro</option>
-                    </select>
-                </label>
-                <label className="flex flex-col">
-                    <span className="input-label"translate="no">Histórico</span>
-                    <select name="historico" value={formData.historico} onChange={handleChange} className={inputClasses}>
-                        <option>Muestra tomada por primera vez</option>
-                        <option>Repetición de Failed</option>
-                        <option>Otro</option>
-                    </select>
-                </label>
+      <span className="input-label">Destino</span>
+      <select name="paisDestino" value={formData.paisDestino} onChange={handleChange} className={inputClasses}>
+        <option>Unión europea</option>
+        <option>Estados Unidos</option>
+        <option>Otro</option>
+      </select>
+    </label>
+                
             </div>
         </div>
+        {/* --- CAMPO CONDICIONAL PARA 'OTRO' --- */}
+    {formData.paisDestino === 'Otro' && (
+      <label className="flex flex-col md:col-span-2"> {/* Ocupa ambas columnas en desktop */}
+        <span className="input-label">Por favor, especifica el destino *</span>
+        <input
+          type="text"
+          name="otroDestino"
+          value={formData.otroDestino}
+          onChange={handleChange}
+          className={inputClasses}
+          placeholder="Ej: Japón"
+          required 
+        />
+      </label>
+    )}
 
         {/* --- DATOS DE LA MASCOTA --- */}
         <div className="form-section">
