@@ -35,6 +35,7 @@ export default function FormularioMascota() {
     sede: "",
     consentimiento: false,
     datosVeridicos: false,
+    costosAdicionales: false
   });
 
   const [status, setStatus] = useState('idle');
@@ -86,7 +87,7 @@ const handleSubmit = async (e) => {
   return (
     <section className="form-container w-full max-w-4xl mx-auto rounded-2xl bg-white p-6 md:p-10 mt-8">
       <h1 className="text-3xl md:text-4xl font-bold text-violet-700 mb-6 text-center">
-        Solicitud de Acta de Sangrado <span className="block text-lg text-green-600">Laboratorio Vet Cells</span>
+        Formato para solicitud de anticuerpos de rabia <span className="block text-lg text-green-600" translate="no">Laboratorio Vet Cells</span>
       </h1>
       <form onSubmit={handleSubmit} className="space-y-8">
         
@@ -103,7 +104,7 @@ const handleSubmit = async (e) => {
                     </select>
                 </label>
                 <label className="flex flex-col">
-                    <span className="input-label">Histórico</span>
+                    <span className="input-label"translate="no">Histórico</span>
                     <select name="historico" value={formData.historico} onChange={handleChange} className={inputClasses}>
                         <option>Muestra tomada por primera vez</option>
                         <option>Repetición de Failed</option>
@@ -140,7 +141,7 @@ const handleSubmit = async (e) => {
             <label className="flex flex-col">
               <span className="input-label">Sexo *</span>
               <select name="sexo" value={formData.sexo} onChange={handleChange} className={inputClasses}>
-                <option>Macho</option>
+                <option translate="no">Macho</option>
                 <option>Hembra</option>
               </select>
             </label>
@@ -246,7 +247,7 @@ const handleSubmit = async (e) => {
         
         {/* --- DATOS DEL MUESTREO --- */}
         <div className="form-section">
-            <h2 className="form-section-title">Datos del Muestreo</h2>
+            <h2 className="form-section-title" translate="no">Datos del Muestreo</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <label className="flex flex-col">
                     <span className="input-label">Nombre Clínica Veterinaria *</span>
@@ -272,24 +273,68 @@ const handleSubmit = async (e) => {
         </div>
 
         {/* --- CONSENTIMIENTO --- */}
-        <div className="space-y-2">
-          <label className="flex items-center gap-2">
-            <input type="checkbox" name="consentimiento" checked={formData.consentimiento} onChange={handleChange} className="w-4 h-4 text-green-700 rounded focus:ring-green-700" required />
-            <span className="text-gray-700 text-sm">Autorizo el uso de mis datos.</span>
-          </label>
-          <label className="flex items-center gap-2">
-            <input type="checkbox" name="datosVeridicos" checked={formData.datosVeridicos} onChange={handleChange} className="w-5 h-5 text-violet-700 rounded focus:ring-violet-700" required />
-            <span className="text-gray-700 text-sm">Con el envío de este formulario, aseguro que todos los datos registrados son precisos y han sido validados por el propietario o cuidador de la mascota.</span>
-          </label>
-        </div>
+        {/* --- CONSENTIMIENTO --- */}
+<div className="space-y-4">
+  <label className="flex items-start gap-3">
+    <input
+      type="checkbox"
+      name="consentimiento"
+      checked={formData.consentimiento}
+      onChange={handleChange}
+      className="h-5 w-5 flex-shrink-0 rounded border-gray-300 text-violet-600 focus:ring-violet-500 mt-0.5"
+      required
+    />
+    <span className="text-gray-700">Autorizo el uso de mis datos.</span>
+  </label>
+  <label className="flex items-start gap-3">
+    <input
+      type="checkbox"
+      name="datosVeridicos"
+      checked={formData.datosVeridicos}
+      onChange={handleChange}
+      className="h-5 w-5 flex-shrink-0 rounded border-gray-300 text-violet-600 focus:ring-violet-500 mt-0.5"
+      required
+    />
+    <span className="text-gray-700">Con el envío de este formulario, aseguro que todos los datos registrados son precisos y han sido validados por el propietario o cuidador de la mascota.</span>
+  </label>
+  <label className="flex items-start gap-3">
+    <input
+      type="checkbox"
+      name="costosAdicionales"
+      checked={formData.costosAdicionales}
+      onChange={handleChange}
+      className="h-5 w-5 flex-shrink-0 rounded border-gray-300 text-violet-600 focus:ring-violet-500 mt-0.5"
+      required
+    />
+    <span className="text-gray-700">Acepto que un error en cualquier dato puede ocasionar costos adicionales elevados para realizar la corrección. Una vez que el resultado ha sido emitido, el tiempo estimado para corregirlo es de aproximadamente 30 días y tiene un valor de 130 USD (Dólares Americanos). Si necesitas más detalles o alguna aclaración, no dudes en consultarme.</span>
+  </label>
+</div>
+
+
 
         {/* --- SUBMIT --- */}
-        <div className="text-center pt-4">
-          <button type="submit" disabled={status === 'submitting'}
-            className="bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 px-10 rounded-xl shadow-lg text-lg transition-all duration-150 disabled:bg-gray-400">
-            {status === 'submitting' ? 'Enviando...' : 'Enviar Solicitud'}
-          </button>
-        </div>
+<div className="text-center pt-4">
+  <button
+    type="submit"
+    disabled={
+      status === 'submitting' ||
+      !formData.consentimiento ||
+      !formData.datosVeridicos ||
+      !formData.costosAdicionales
+    }
+    className="bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 px-10 rounded-xl shadow-lg text-lg transition-all duration-150 disabled:bg-gray-400 disabled:cursor-not-allowed"
+  >
+    {status === 'submitting' ? 'Enviando...' : 'Enviar Solicitud'}
+  </button>
+
+  {/* --- MENSAJE DE AYUDA CONDICIONAL --- */}
+  {(!formData.consentimiento || !formData.datosVeridicos || !formData.costosAdicionales) && status !== 'submitting' && (
+    <p className="text-sm text-gray-500 mt-3">
+      Debes marcar todas las casillas para poder enviar la solicitud.
+    </p>
+  )}
+</div>
+
       </form>
       
        {/* --- MENSAJE DE RESPUESTA --- */}
