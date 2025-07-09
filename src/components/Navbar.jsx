@@ -17,7 +17,7 @@ export default function Navbar({ active, onNav }) {
       {/* Contenedor del Logo y Título */}
       <div className="flex items-center gap-2">
         <img src={logo} alt="logo" className="w-10 h-10 rounded-full bg-white shadow" />
-        <span className="font-bold text-2xl text-green-700">Vet Cells</span>
+        <span className="font-bold text-2xl text-green-700" translate="no">Vet Cells</span>
       </div>
 
       {/* Botón de Hamburguesa (visible solo en móvil) */}
